@@ -17,6 +17,8 @@ import mongoose, { Schema, Document } from "mongoose";
 interface ItemInterface extends Document {
   author: string;
   link: string;
+  username: string;
+  votes: number;
   created: Date;
   updated: Date;
 }
@@ -24,8 +26,10 @@ interface ItemInterface extends Document {
  * Schema for an item
  */
 const ItemSchema: Schema = new Schema({
-  author: { type: String, required: true },
+  author: { type: String, required: true, unique: true },
   link: { type: String, required: true },
+  votes: { type: Number, default: 0 },
+  username: { type: String, required: true, unique: true },
   created: { type: Date, default: Date.now },
   updated: { type: Date },
 });

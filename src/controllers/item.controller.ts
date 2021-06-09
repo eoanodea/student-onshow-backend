@@ -58,7 +58,7 @@ export const create = async (req: Request, res: Response) => {
  */
 export const list = async (req: Request, res: Response) => {
   try {
-    const items = await Item.find({}).select("title created");
+    const items = await Item.find({});
 
     return res.status(200).json(handleSuccess(items));
   } catch (err) {
@@ -93,6 +93,28 @@ export const update = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
     const item = await Item.findByIdAndUpdate(id, req.body);
+
+    return res.status(200).json(handleSuccess(item));
+  } catch (err) {
+    return res.status(400).json(handleError(err));
+  }
+};
+
+/**
+ * Vote for an item by ID
+ *
+ * @param req
+ * @param res
+ */
+export const vote = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+
+    const item = await Item.findByIdAndUpdate(
+      id,
+      { $inc: { votes: 1 } },
+      { new: true }
+    );
 
     return res.status(200).json(handleSuccess(item));
   } catch (err) {

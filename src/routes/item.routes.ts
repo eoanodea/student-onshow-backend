@@ -35,4 +35,9 @@ router
   .put(itemCtrl.update)
   .delete(itemCtrl.remove);
 
+/**
+ * @method GET - Vote for an Item By ID
+ */
+router.route(`${prefix}/vote/:id`).put(itemCtrl.vote);
+
 export default router;
