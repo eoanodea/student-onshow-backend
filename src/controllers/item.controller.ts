@@ -108,15 +108,17 @@ export const update = async (req: Request, res: Response) => {
  */
 export const vote = async (req: Request, res: Response) => {
   try {
-    const { id } = req.params;
+    const { id, unvote } = req.params;
+
+    const value = unvote === "true" ? -1 : 1;
 
     const item = await Item.findByIdAndUpdate(
       id,
-      { $inc: { votes: 1 } },
+      { $inc: { votes: value } },
       { new: true }
     );
 
-    return res.status(200).json(handleSuccess(item));
+    return res.status(200).json(handleSuccess({ item, unvote }));
   } catch (err) {
     return res.status(400).json(handleError(err));
   }

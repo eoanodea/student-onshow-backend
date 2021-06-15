@@ -38,6 +38,6 @@ router
 /**
  * @method GET - Vote for an Item By ID
  */
-router.route(`${prefix}/vote/:id`).put(itemCtrl.vote);
+router.route(`${prefix}/vote/:id/:unvote`).put(itemCtrl.vote);
 
 export default router;
